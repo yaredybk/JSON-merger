@@ -36,11 +36,11 @@ const getInitialInputs = () => {
  * take precedence over the source (second) object's values in case of conflict.
  * Non-conflicting keys from the source are added to the target.
  *
- * @param {any} target - The base object (first input).
- * @param {any} source - The object to merge into the target.
+ * @param {object} target - The base object (first input).
+ * @param {object} source - The object to merge into the target.
  * @returns {any} The merged object, or the target if it's a primitive/array.
  */
-const deepMerge = (target, source) => {
+const deepMerge = (target: { [key: string]: any }, source: { [key: string]: any }) => {
     const targetIsObject = typeof target === 'object' && target !== null && !Array.isArray(target);
     const sourceIsObject = typeof source === 'object' && source !== null && !Array.isArray(source);
 
@@ -55,7 +55,7 @@ const deepMerge = (target, source) => {
     }
 
     // Both are mergeable objects. Start merging.
-    const output = { ...target };
+    const output: { [key: string]: any } = { ...target };
 
     for (const key in source) {
         if (Object.prototype.hasOwnProperty.call(source, key)) {
@@ -79,7 +79,7 @@ const deepMerge = (target, source) => {
  * @param {string} str - The input string.
  * @returns {string} The sanitized string.
  */
-const sanitizeInputToValidJSON = (str) => {
+const sanitizeInputToValidJSON = (str: string) => {
     // 1. Remove trailing commas (common in JS object literals)
     let cleaned = str.replace(/,\s*([}\]])/g, '$1').trim();
 
@@ -95,12 +95,12 @@ const sanitizeInputToValidJSON = (str) => {
 const App = () => {
     // Load state from localStorage on initial render
     const [jsonInputs, setJsonInputs] = useState(getInitialInputs);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState("");
 
     // --- Input Handlers ---
 
     // Handles changes in individual textarea inputs
-    const handleInputChange = useCallback((index, value) => {
+    const handleInputChange = useCallback((index: number, value: string) => {
         setJsonInputs(prevInputs => {
             const newInputs = [...prevInputs];
             newInputs[index] = value;
@@ -115,7 +115,7 @@ const App = () => {
     }, []);
 
     // Handles removing an input field
-    const handleRemoveInput = useCallback((index) => {
+    const handleRemoveInput = useCallback((index: number) => {
         if (jsonInputs.length > 1) {
             setJsonInputs(prevInputs => prevInputs.filter((_, i) => i !== index));
         }
@@ -124,7 +124,7 @@ const App = () => {
     // --- Merging and Computation (Memoized) ---
 
     const mergedResult = useMemo(() => {
-        setError(null);
+        setError("");
         let finalMergedObject = {};
         let firstValidObjectFound = false;
 
@@ -155,7 +155,8 @@ const App = () => {
                 }
             } catch (e) {
                 // Set an error if any non-empty input is invalid JSON even after sanitization
-                setError(`Parse Error in Input ${i + 1}: Check JSON format. (e.g., missing comma, single quotes used for strings, etc.)`);
+                console.log(e);
+                setError("`Parse Error in Input ${i + 1}: Check JSON format. (e.g., missing comma, single quotes used for strings, etc.)`");
                 return ''; // Stop merging on the first error
             }
         }
