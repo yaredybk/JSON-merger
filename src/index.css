@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark light;
+  color: light-dark(#000, #fff);
+  background-color: light-dark(#e4ffff, #284647);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* theme */
+  --color: light-dark(#000, #fff);
+  --background-color: light-dark(#e4ffff, #284647);
+  --border-color: light-dark(#ccc, #333);
+  --button-background: light-dark(#eee, #1e1e1e);
+  --button-hover-background: light-dark(#ddd, #2a2a2a);
+  --button-active-background: light-dark(#ccc, #3a3a3a);
+  --button-border: light-dark(#ccc, #333);
+  --button-color: light-dark(#000, #fff);
+
+}
+
+
+textarea{
+  color: var(--color);
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5em;
+  resize: vertical;
+  min-height: 100px;
+  overflow: auto;
+}
