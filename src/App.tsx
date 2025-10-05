@@ -251,7 +251,7 @@ const App = () => {
                                     document.body.removeChild(temp);
                                 }
                             }}
-                            disabled={mergedResult.includes('// Paste JSON') || error}
+                            disabled={mergedResult.includes('// Paste JSON') || Boolean(error)}
                             className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition duration-150 shadow-md"
                         >
                             Copy JSON
